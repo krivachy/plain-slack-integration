@@ -1,0 +1,1 @@
+# plain-slack-integration
