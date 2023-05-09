@@ -1,0 +1,20 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1683392563835,
+      "tag": "0000_neat_komodo",
+      "breakpoints": false
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1683576510907,
+      "tag": "0001_dashing_mephistopheles",
+      "breakpoints": false
+    }
+  ]
+}

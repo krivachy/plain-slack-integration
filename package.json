@@ -1,0 +1,54 @@
+{
+  "name": "plain-slack-integration",
+  "version": "0.0.1",
+  "description": "A Slack bolt.js app that integrates with Plain",
+  "keywords": [
+    "plain",
+    "plain.com",
+    "slack",
+    "integration",
+    "bolt.js"
+  ],
+  "engines": {
+    "pnpm": "8",
+    "node": "18"
+  },
+  "main": "dist/app.js",
+  "scripts": {
+    "build": "tsc -p .",
+    "build:watch": "tsc -w -p .",
+    "start": "pnpm run build && node dist/app.js",
+    "start:watch": "concurrently \"pnpm run build:watch\" \"nodemon dist/app.js\"",
+    "preinstall": "npx only-allow pnpm",
+    "codegen": "pnpm run db:generate && pnpm run graphql:download && pnpm run graphql:generate",
+    "graphql:download": "curl -s https://core-api.uk.plain.com/graphql/v1/schema.graphql -o schema.graphql",
+    "graphql:generate": "graphql-codegen --config codegen.ts",
+    "db:generate": "drizzle-kit generate:pg"
+  },
+  "author": "Akos Krivachy",
+  "license": "MIT",
+  "dependencies": {
+    "@slack/bolt": "3.13.1",
+    "@slack/web-api": "6.8.1",
+    "assert-ts": "0.3.4",
+    "dotenv": "16.0.3",
+    "drizzle-orm": "0.25.4",
+    "graphql": "16.6.0",
+    "graphql-request": "5.1.0",
+    "graphql-tag": "2.12.6",
+    "pg": "8.10.0",
+    "zod": "3.21.4"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "3.3.1",
+    "@graphql-codegen/typescript-graphql-request": "4.5.9",
+    "@graphql-codegen/typescript-operations": "3.0.4",
+    "@types/node": "18.16.3",
+    "@types/pg": "8.6.6",
+    "concurrently": "8.0.1",
+    "drizzle-kit": "0.17.6",
+    "nodemon": "2.0.22",
+    "prettier": "2.8.8",
+    "typescript": "5.0.4"
+  }
+}

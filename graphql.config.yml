@@ -1,0 +1,8 @@
+schema: schema.graphql
+documents: '**/*.gql'
+extensions:
+  endpoints:
+    default:
+      url: https://core-api.uk.plain.com/graphql/v1/
+      headers:
+        Authorization: Bearer ${PLAIN_API_KEY}

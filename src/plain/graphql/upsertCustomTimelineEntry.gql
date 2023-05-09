@@ -1,0 +1,44 @@
+mutation upsertCustomTimelineEntry($input: UpsertCustomTimelineEntryInput!) {
+    upsertCustomTimelineEntry(input: $input) {
+        result
+        timelineEntry {
+            id
+            entry {
+                ... on CustomEntry {
+                    title
+                    components {
+                        ... on ComponentText {
+                            __typename
+                            text
+                            textSize
+                            textColor
+                        }
+                        ... on ComponentSpacer {
+                            __typename
+                            spacerSize
+                        }
+                        ... on ComponentDivider {
+                            __typename
+                            spacingSize
+                        }
+                        ... on ComponentLinkButton {
+                            __typename
+                            url
+                            label
+                        }
+                    }
+                }
+            }
+        }
+        error {
+            message
+            type
+            code
+            fields {
+                field
+                message
+                type
+            }
+        }
+    }
+}
