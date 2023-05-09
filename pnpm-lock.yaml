@@ -28,9 +28,6 @@ dependencies:
   pg:
     specifier: 8.10.0
     version: 8.10.0
-  to-readable-stream:
-    specifier: 4.0.0
-    version: 4.0.0
   zod:
     specifier: 3.21.4
     version: 3.21.4
@@ -4853,11 +4850,6 @@ packages:
     resolution: {integrity: sha512-/OaKK0xYrs3DmxRYqL/yDc+FxFUVYhDlXMhRmv3z915w2HF1tnN1omB354j8VUGO/hbRzyD6Y3sA7v7GS/ceog==}
     engines: {node: '>=4'}
     dev: true
-
-  /to-readable-stream@4.0.0:
-    resolution: {integrity: sha512-b39z6yUzkmzZXTNlKZoLo1kIPXJDioGSMMX4ydudA3XX8M/AjcsPdJRVz2zbrGZoekhkMlz6qYok2iVdlMH/yQ==}
-    engines: {node: '>=18'}
-    dev: false
 
   /to-regex-range@5.0.1:
     resolution: {integrity: sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==}
