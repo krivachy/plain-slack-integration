@@ -21,7 +21,7 @@ const app = new App({
   clientId: process.env.SLACK_CLIENT_ID,
   clientSecret: process.env.SLACK_CLIENT_SECRET,
   stateSecret: 'my-state-secret',
-  scopes: ['channels:history', 'chat:write', 'commands', 'users:read'],
+  scopes: ['channels:history', 'chat:write', 'commands', 'users:read', 'users:read.email'],
   logLevel: LogLevel.DEBUG,
   installationStore,
   redirectUri: `${baseDomain}/slack/oauth_redirect`,
