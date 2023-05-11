@@ -1,4 +1,8 @@
 services:
+  - type: database
+    name: plain-slack-integration-database-production
+    region: frankfurt
+    plan: starter
   - type: web
     name: plain-slack-integration-production
     env: node
@@ -14,13 +18,19 @@ services:
       - key: BASE_DOMAIN
         value: https://plain-slack-integration-production.onrender.com
       - key: DATABASE_URL
-        sync: false
+        fromDatabase:
+          name: plain-slack-integration-database-production
+          property: connectionString
       - key: SLACK_CLIENT_ID
         value: 5201178479941.5226688564182
       - key: SLACK_CLIENT_SECRET
         sync: false
       - key: SLACK_SIGNING_SECRET
         sync: false
+  - type: database
+    name: plain-slack-integration-database-development
+    region: frankfurt
+    plan: starter
   - type: web
     name: plain-slack-integration-development
     env: node
@@ -36,7 +46,9 @@ services:
       - key: BASE_DOMAIN
         value: https://plain-slack-integration-development.onrender.com
       - key: DATABASE_URL
-        sync: false
+        fromDatabase:
+          name: plain-slack-integration-database-development
+          property: connectionString
       - key: SLACK_CLIENT_ID
         value: 5201178479941.5211681684117
       - key: SLACK_CLIENT_SECRET
