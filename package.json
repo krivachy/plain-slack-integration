@@ -18,7 +18,7 @@
     "build": "tsc -p .",
     "build:watch": "tsc -w -p .",
     "start": "pnpm run build && node dist/app.js",
-    "start:watch": "concurrently \"pnpm run build:watch\" \"nodemon dist/app.js\"",
+    "start:watch": "concurrently \"pnpm run build:watch\" \"nodemon dist/app.js | pino-pretty\"",
     "preinstall": "npx only-allow pnpm",
     "codegen": "pnpm run db:generate && pnpm run graphql:download && pnpm run graphql:generate",
     "graphql:download": "curl -s https://core-api.uk.plain.com/graphql/v1/schema.graphql -o schema.graphql",
@@ -29,6 +29,7 @@
   "license": "MIT",
   "dependencies": {
     "@slack/bolt": "3.13.1",
+    "@slack/logger": "3.0.0",
     "@slack/web-api": "6.8.1",
     "assert-ts": "0.3.4",
     "dotenv": "16.0.3",
@@ -38,6 +39,7 @@
     "graphql-tag": "2.12.6",
     "lodash": "4.17.21",
     "pg": "8.10.0",
+    "pino": "8.14.1",
     "zod": "3.21.4"
   },
   "devDependencies": {
@@ -50,6 +52,7 @@
     "concurrently": "8.0.1",
     "drizzle-kit": "0.17.6",
     "nodemon": "2.0.22",
+    "pino-pretty": "10.0.0",
     "prettier": "2.8.8",
     "typescript": "5.0.4"
   }
