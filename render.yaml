@@ -1,8 +1,11 @@
-services:
-  - type: database
-    name: plain-slack-integration-database-production
+databases:
+  - name: plain-slack-integration-database-production
     region: frankfurt
     plan: starter
+  - name: plain-slack-integration-database-development
+    region: frankfurt
+    plan: starter
+services:
   - type: web
     name: plain-slack-integration-production
     env: node
@@ -27,10 +30,6 @@ services:
         sync: false
       - key: SLACK_SIGNING_SECRET
         sync: false
-  - type: database
-    name: plain-slack-integration-database-development
-    region: frankfurt
-    plan: starter
   - type: web
     name: plain-slack-integration-development
     env: node
