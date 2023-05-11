@@ -4,6 +4,7 @@ import { upsertCustomer } from '../plain/upsertCustomer';
 import { upsertCustomTimelineEntry } from '../plain/upsertCustomTimelineEntry';
 import { getPlainSdkForSlack } from './getPlainSdkForSlack';
 import { buildCustomTimelineEntry } from './buildCustomTimelineEntry';
+import { resolveSlackMentions } from './resolveSlackMentions';
 
 interface User {
   fullName: string;
@@ -78,20 +79,29 @@ export function shortcut(app: App): void {
       ) {
         return await respond({
           response_type: 'ephemeral',
-          text: `Can't add this message to Plain as this message was sent by a Plain user and not a customer. Try again with a message from a customer.`,
+          text: `❌ Can't ${
+            shortcut.callback_id === 'add_to_plain' ? 'add' : 'log'
+          } this message to Plain as this message was sent by a Plain user (${
+            customerInSlack.fullName
+          } ${
+            customerInSlack.email
+          }) and not a customer.\nTry the action again with a message from a customer.`,
         });
       }
 
       const customer = await upsertCustomer(sdk, customerInSlack);
       const messageId = buildSlackMessageId(shortcut);
-      const channelName = await buildChannelName(shortcut, client);
+      const [channelName, messageText] = await Promise.all([
+        buildChannelName(shortcut, client),
+        resolveSlackMentions(client, message.text),
+      ]);
       await upsertCustomTimelineEntry(sdk, {
         customerId: customer.id,
         externalId: messageId,
         title: `Slack message in ${channelName}`,
         changeCustomerStatusToActive: shortcut.callback_id === 'add_to_plain',
         components: buildCustomTimelineEntry({
-          text: message.text,
+          text: messageText,
           messagePermalink: messagePermaLink.permalink,
           teamId: shortcut.team?.id,
           channelId: shortcut.channel.id,
@@ -99,11 +109,11 @@ export function shortcut(app: App): void {
       });
       await respond({
         response_type: 'ephemeral',
-        text: `✅ Message ${
+        text: `✅ Slack message ${
           shortcut.callback_id === 'add_to_plain' ? 'added' : 'logged'
-        } to Plain! You can view it here: https://app.plain.com/workspace/${
-          sdk.workspaceId
-        }/customer/${customer.id}`,
+        } to Plain! 🔗 <https://app.plain.com/workspace/${sdk.workspaceId}/customer/${
+          customer.id
+        }|*${customer.fullName}* _(${customer.email.email})_>`,
       });
     } catch (error) {
       logger.error(error);
