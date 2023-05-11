@@ -28,6 +28,16 @@ const app = new App({
   installerOptions: {
     redirectUriPath: '/slack/oauth_redirect',
   },
+  customRoutes: [
+    {
+      path: '/health',
+      method: ['GET'],
+      handler: (req, res) => {
+        res.writeHead(200);
+        res.end(JSON.stringify({ status: 'ok' }));
+      },
+    },
+  ],
 });
 
 slashCommand(app);
@@ -36,6 +46,4 @@ shortcut(app);
 (async () => {
   await migrate(db, { migrationsFolder: './src/db/migrations' });
   await app.start(Number(process.env.PORT) || 3000);
-
-  console.log('⚡️ Bolt app is running!');
 })();
