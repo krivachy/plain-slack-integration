@@ -2426,10 +2426,13 @@ export type Query = {
   myLinearInstallationInfo: UserLinearInstallationInfo;
   myLinearIntegration?: Maybe<UserLinearIntegration>;
   myLinearIntegrationToken?: Maybe<LinearIntegrationToken>;
+  myMachineUser?: Maybe<MachineUser>;
+  myPermissions: Permissions;
   mySlackInstallationInfo: UserSlackInstallationInfo;
   mySlackIntegration?: Maybe<UserSlackIntegration>;
   myUser?: Maybe<User>;
   myUserAccount?: Maybe<UserAccount>;
+  myWorkspace?: Maybe<Workspace>;
   myWorkspaceInvites: WorkspaceInviteConnection;
   myWorkspaces: WorkspaceConnection;
   permissions: Permissions;
@@ -3667,6 +3670,11 @@ export type WorkspaceSlackIntegrationEdge = {
   node: WorkspaceSlackIntegration;
 };
 
+export type GetApiKeyDetailsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetApiKeyDetailsQuery = { __typename?: 'Query', myPermissions: { __typename?: 'Permissions', permissions: Array<string> }, myWorkspace?: { __typename?: 'Workspace', id: string, name: string, publicName: string } | null };
+
 export type GetAllWorkspaceUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -3677,7 +3685,7 @@ export type UpsertCustomTimelineEntryMutationVariables = Exact<{
 }>;
 
 
-export type UpsertCustomTimelineEntryMutation = { __typename?: 'Mutation', upsertCustomTimelineEntry: { __typename?: 'UpsertCustomTimelineEntryOutput', result?: UpsertResult | null, timelineEntry?: { __typename?: 'TimelineEntry', id: string, customerId: string, timestamp: { __typename?: 'DateTime', iso8601: string }, entry: { __typename?: 'ChatEntry' } | { __typename?: 'CustomEntry', title: string, components: Array<{ __typename?: 'ComponentBadge' } | { __typename?: 'ComponentContainer' } | { __typename?: 'ComponentCopyButton' } | { __typename: 'ComponentDivider', spacingSize?: ComponentDividerSpacingSize | null } | { __typename: 'ComponentLinkButton', url: string, label: string } | { __typename?: 'ComponentPlainText' } | { __typename?: 'ComponentRow' } | { __typename: 'ComponentSpacer', spacerSize: ComponentSpacerSize } | { __typename: 'ComponentText', text: string, textSize?: ComponentTextSize | null, textColor?: ComponentTextColor | null }> } | { __typename?: 'CustomerAssignmentTransitionedEntry' } | { __typename?: 'CustomerStatusTransitionedEntry' } | { __typename?: 'EmailEntry' } | { __typename?: 'IssueDeletedEntry' } | { __typename?: 'IssueIssueTypeChangedEntry' } | { __typename?: 'IssuePriorityChangedEntry' } | { __typename?: 'IssueStatusTransitionedEntry' } | { __typename?: 'LinearIssueLinkStateTransitionedEntry' } | { __typename?: 'NoteEntry' }, actor: { __typename?: 'CustomerActor' } | { __typename?: 'DeletedCustomerActor' } | { __typename?: 'MachineUserActor', machineUser: { __typename?: 'MachineUser', id: string, fullName: string, publicName: string } } | { __typename?: 'SystemActor' } | { __typename?: 'UserActor' } } | null, error?: { __typename?: 'MutationError', message: string, type: MutationErrorType, code: string, fields: Array<{ __typename?: 'MutationFieldError', field: string, message: string, type: MutationFieldErrorType }> } | null } };
+export type UpsertCustomTimelineEntryMutation = { __typename?: 'Mutation', upsertCustomTimelineEntry: { __typename?: 'UpsertCustomTimelineEntryOutput', result?: UpsertResult | null, timelineEntry?: { __typename?: 'TimelineEntry', id: string, entry: { __typename?: 'ChatEntry' } | { __typename?: 'CustomEntry', title: string, components: Array<{ __typename?: 'ComponentBadge' } | { __typename?: 'ComponentContainer' } | { __typename?: 'ComponentCopyButton' } | { __typename: 'ComponentDivider', spacingSize?: ComponentDividerSpacingSize | null } | { __typename: 'ComponentLinkButton', url: string, label: string } | { __typename?: 'ComponentPlainText' } | { __typename?: 'ComponentRow' } | { __typename: 'ComponentSpacer', spacerSize: ComponentSpacerSize } | { __typename: 'ComponentText', text: string, textSize?: ComponentTextSize | null, textColor?: ComponentTextColor | null }> } | { __typename?: 'CustomerAssignmentTransitionedEntry' } | { __typename?: 'CustomerStatusTransitionedEntry' } | { __typename?: 'EmailEntry' } | { __typename?: 'IssueDeletedEntry' } | { __typename?: 'IssueIssueTypeChangedEntry' } | { __typename?: 'IssuePriorityChangedEntry' } | { __typename?: 'IssueStatusTransitionedEntry' } | { __typename?: 'LinearIssueLinkStateTransitionedEntry' } | { __typename?: 'NoteEntry' } } | null, error?: { __typename?: 'MutationError', message: string, type: MutationErrorType, code: string, fields: Array<{ __typename?: 'MutationFieldError', field: string, message: string, type: MutationFieldErrorType }> } | null } };
 
 export type UpsertCustomerMutationVariables = Exact<{
   input: UpsertCustomerInput;
@@ -3687,6 +3695,18 @@ export type UpsertCustomerMutationVariables = Exact<{
 export type UpsertCustomerMutation = { __typename?: 'Mutation', upsertCustomer: { __typename?: 'UpsertCustomerOutput', result?: UpsertResult | null, customer?: { __typename?: 'Customer', id: string, externalId?: string | null, shortName?: string | null, fullName: string, status: CustomerStatus, email: { __typename?: 'EmailAddress', email: string, isVerified: boolean } } | null, error?: { __typename?: 'MutationError', message: string, type: MutationErrorType, code: string, fields: Array<{ __typename?: 'MutationFieldError', field: string, message: string, type: MutationFieldErrorType }> } | null } };
 
 
+export const GetApiKeyDetailsDocument = gql`
+    query getApiKeyDetails {
+  myPermissions {
+    permissions
+  }
+  myWorkspace {
+    id
+    name
+    publicName
+  }
+}
+    `;
 export const GetAllWorkspaceUsersDocument = gql`
     query getAllWorkspaceUsers {
   users(first: 100) {
@@ -3706,10 +3726,6 @@ export const UpsertCustomTimelineEntryDocument = gql`
     result
     timelineEntry {
       id
-      customerId
-      timestamp {
-        iso8601
-      }
       entry {
         ... on CustomEntry {
           title
@@ -3733,15 +3749,6 @@ export const UpsertCustomTimelineEntryDocument = gql`
               url
               label
             }
-          }
-        }
-      }
-      actor {
-        ... on MachineUserActor {
-          machineUser {
-            id
-            fullName
-            publicName
           }
         }
       }
@@ -3792,11 +3799,15 @@ export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, str
 
 
 const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationType) => action();
+const GetApiKeyDetailsDocumentString = print(GetApiKeyDetailsDocument);
 const GetAllWorkspaceUsersDocumentString = print(GetAllWorkspaceUsersDocument);
 const UpsertCustomTimelineEntryDocumentString = print(UpsertCustomTimelineEntryDocument);
 const UpsertCustomerDocumentString = print(UpsertCustomerDocument);
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
+    getApiKeyDetails(variables?: GetApiKeyDetailsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<{ data: GetApiKeyDetailsQuery; extensions?: unknown; headers: Dom.Headers; status: number; }> {
+        return withWrapper((wrappedRequestHeaders) => client.rawRequest<GetApiKeyDetailsQuery>(GetApiKeyDetailsDocumentString, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getApiKeyDetails', 'query');
+    },
     getAllWorkspaceUsers(variables?: GetAllWorkspaceUsersQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<{ data: GetAllWorkspaceUsersQuery; extensions?: unknown; headers: Dom.Headers; status: number; }> {
         return withWrapper((wrappedRequestHeaders) => client.rawRequest<GetAllWorkspaceUsersQuery>(GetAllWorkspaceUsersDocumentString, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getAllWorkspaceUsers', 'query');
     },

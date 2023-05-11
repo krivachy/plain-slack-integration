@@ -36,6 +36,7 @@
     "graphql": "16.6.0",
     "graphql-request": "5.1.0",
     "graphql-tag": "2.12.6",
+    "lodash": "4.17.21",
     "pg": "8.10.0",
     "zod": "3.21.4"
   },
@@ -43,6 +44,7 @@
     "@graphql-codegen/cli": "3.3.1",
     "@graphql-codegen/typescript-graphql-request": "4.5.9",
     "@graphql-codegen/typescript-operations": "3.0.4",
+    "@types/lodash": "4.14.194",
     "@types/node": "18.16.3",
     "@types/pg": "8.6.6",
     "concurrently": "8.0.1",

@@ -1,0 +1,10 @@
+query getApiKeyDetails {
+    myPermissions {
+        permissions
+    }
+    myWorkspace {
+        id
+        name
+        publicName
+    }
+}
