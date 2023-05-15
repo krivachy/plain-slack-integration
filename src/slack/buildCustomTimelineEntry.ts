@@ -14,7 +14,7 @@ export function buildCustomTimelineEntry(args: {
     },
     {
       componentSpacer: {
-        spacerSize: ComponentSpacerSize.L,
+        spacerSize: ComponentSpacerSize.M,
       },
     },
     {
