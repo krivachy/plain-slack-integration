@@ -2,7 +2,7 @@
 
 ## 1. Install the Slack app
 
-<a href="https://slack.com/oauth/v2/authorize?scope=channels%3Ahistory%2Cchat%3Awrite%2Ccommands%2Cusers%3Aread%2Cusers%3Aread.email&amp;user_scope=&amp;redirect_uri=https%3A%2F%2Fplain-slack-integration-production.onrender.com%2Fslack%2Foauth_redirect&amp;client_id=5201178479941.5226688564182" target="_blank">
+<a href="https://plain-slack-integration-production.onrender.com/slack/install" target="_blank">
 <img src="./img/add_to_slack_button.svg">
 </a>
 
