@@ -13,7 +13,7 @@ export async function getPlainSdkForSlack(
   if (!apiKeyDetails) {
     await respond({
       response_type: 'ephemeral',
-      text: `Plain API Key not configured. Please run \`/plain configure <workspace id> <plain api key>\` before trying to use Plain shortcuts.`,
+      text: `Plain API Key not configured. Please run \`/plain configure <plain api key>\` before trying to use Plain shortcuts.`,
     });
     return null;
   }
