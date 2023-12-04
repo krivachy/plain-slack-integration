@@ -1,4 +1,4 @@
-# Plain Support Slack Integration
+# Plain Slack Integration
 
 ⚠️ This was a prototype integration that has now been deprecated. 
 
